@@ -1,0 +1,78 @@
+
+* { /* アスタリスクで全要素に対応させる */
+    box-sizing: border-box; /* flexを当てた時にレスポンシブ対応しやすくなる。*/
+}
+
+body { /* HTML全体の設定 */
+    height: 100vh; /* 壁いっぱいの高さにします */
+    display: flex; /* 画面中央に来させます */
+    align-items: center; /* flexboxアイテムを縦軸で揃えます。*/
+    justify-content: center; /* flexboxアイテムを横軸で揃えます。*/
+    overflow: hidden; /* スクロールできなくします。*/
+    background: linear-gradient(to left top, #f6f0f0, #e29d06); /* 左上にかけて背景色にグラデーションをかけます。*/
+}
+
+.container { /* メインディスプレイみたいな感じ */
+    background-color: aqua; /* background-color は、個別に設定できるだけの些細な違い */
+    font-size: 2.4rem;
+    font-weight: 600;
+    padding: 4rem;
+    border-radius: 0.5rem;
+    width: 1000px;
+    height: 600px;
+    max-width: 90%;
+    max-height: 90%; /* これ！画面の幅に合わせて、レスポンシブ対応できてる！ */
+    box-shadow: 1px 5px 6px #150000; /* とりあえず、box-shadow つけとけば、いい感じになる。*/
+}
+
+.container .type-input { /* containerクラスの、type-inputクラス。テキストエリアの設定ですね。*/
+    margin-top: 3rem; /* DOMそのものを、上から、4rem 離す。*/
+    font-size: 3rem; 
+    background: transparent;
+    border: 2px solid red;
+    width: 100%; /* %で指定することで、レスポンシブ対応を実現できますね。*/
+    height: 80%;
+    resize: none; /* テキストエリアをGUI上で変更できないようにする。*/
+    padding: 1rem 1rem; /* padding は、中のテキストを動かせたよぉ。*/
+    border-radius: 1rem;
+}
+
+.timer {
+    position: absolute; /* レスポンシブ(絶対的に)に中央に配置する! */
+    top: 0.5rem;
+    font-size: 4rem;
+    padding-left: 4px;
+    padding-right: 4px;
+    color: #0c0a06;
+    background-color: #d53232;
+}
+
+.container .type-display {
+    margin-left: 1rem;
+    color: #fff;
+}
+
+.correct {
+    color: red;
+}
+
+.incorrect {
+    color: blue;
+    text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

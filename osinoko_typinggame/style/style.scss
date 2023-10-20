@@ -1,0 +1,532 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=PT+Serif&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+@mixin canvas(){
+    width: 100%;
+    height: 100vh;
+}
+@mixin BGI-set(){
+    background-size: cover;
+    background-position: center;
+}
+@mixin pos-center(){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.section-curtain {
+    @include canvas;
+    @include pos-center;
+    position: fixed;
+    z-index: 2;
+    background-color: black;
+
+    .section-loading{
+
+        .cursor_cont01 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translate(-50%,-50%);
+            font-size: 13rem;
+            animation: title-Color-changing 3s linear 0s infinite normal;
+        }
+        .i_cont01 {
+            font-size: 7rem; 
+            color: white;
+            animation: first-loading 5s linear 0s forwards normal;
+        }
+        .p_cont01 {
+            font-size: 20px;
+            color: white;
+            animation: first-loading 5s linear 0s forwards normal;
+        }
+    }
+}
+
+.first-section {
+    @include canvas;
+    @include BGI-set;
+    position: relative;
+    overflow: hidden;
+    background-image: url(../img/osinoko.jpg);
+    display: none;
+
+    .confetti {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        animation: title-confetti 10s linear 0s forwards normal;
+    }
+    .title {
+        @include canvas;
+        @include pos-center;
+        font-size: 2rem;
+
+        .title-text {
+            position: relative;
+            display: flex;
+            top: -10vh;
+            font-family: 'Caveat', cursive;
+
+            .uni {
+                margin-right: 20px;
+            }
+            .uni:nth-child(1) {
+                animation: title-Color-changing 3s linear 0s infinite normal;
+            }
+            .uni:nth-child(2) {
+                animation: title-Color-changing 3s linear 0.2s infinite normal;
+            }
+            .uni:nth-child(3) {
+                animation: title-Color-changing 3s linear 0.4s infinite normal;
+            }
+            .uni:nth-child(4) {
+                animation: title-Color-changing 3s linear 0.6s infinite normal;
+            }
+            .uni:nth-child(5) {
+                animation: title-Color-changing 3s linear 0.8s infinite normal;
+            }
+            .uni:nth-child(6) {
+                animation: title-Color-changing 3s linear 1s infinite normal;
+            }
+            .uni:nth-child(7) {
+                animation: title-Color-changing 3s linear 1.2s infinite normal;
+            }
+        }
+        .title-btn {
+            z-index: 1;
+            color: white;
+            padding: 30px;
+            border: 1px solid black;
+            border-radius: 10%;
+            transition: all 2s;
+        }
+        .title-btn:hover {
+            color: black;
+            border: 0px;
+            border-radius: 50%;
+            transform: scale(1.6) rotate(360deg);
+            transition: all 2s;
+        }
+    }
+}
+
+.second-sections {
+    @include canvas;
+    position: absolute;
+    overflow: hidden;
+    display: none;
+
+    .explanation {
+        @include canvas;
+        @include pos-center;
+        font-family: 'Caveat', cursive;
+        font-size: 2rem;
+        white-space: nowrap;
+
+        div {
+            position: relative;
+
+            .css-common01 {
+                position: relative;
+                overflow: hidden;
+            }
+            .css-common01::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: white;
+            }
+            .css-common01::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 3px;
+                height: 100%;
+                background-color: transparent;
+            }
+            .first-line.entry::after { 
+                animation: blink 0.8s linear 0s infinite;
+            }
+    
+            .first-line.sec-01::before,
+            .first-line.done01::before {
+                animation: appear-text 2.5s steps(21) 0s forwards;
+            }
+            .first-line.sec-01::after,
+            .first-line.done01::after {
+                animation: appear-text 2.5s steps(21) 0s forwards,
+                blink 0.3s linear 0s infinite;
+            }
+            .second-lines.sec-01::after {
+                animation: blink 0.8s linear 2.5s infinite;
+            }
+    
+            .second-lines.sec-02::before,
+            .second-lines.done02::before {
+                animation: appear-text 3.4s steps(29) 0s forwards;
+            }
+            .second-lines.sec-02::after,
+            .second-lines.done02::after {
+                animation: appear-text 3.4s steps(29) 0s forwards,
+                blink 0.3s linear 0s infinite;
+            }
+            .third-lines.sec-02::after {
+                animation: blink 0.8s linear 3.4s infinite;
+            }
+    
+            .third-lines.sec-03::before,
+            .third-lines.done03::before {
+                animation: appear-text 3.4s steps(29) 0s forwards;
+            }
+            .third-lines.sec-03::after,
+            .third-lines.done03::after {
+                animation: appear-text 3.4s steps(29) 0s forwards,
+                blink 0.3s linear 0s infinite;
+            }
+            .forth-lines.sec-03::after {
+                animation: blink 0.8s linear 3.4s infinite;
+            }
+    
+            .forth-lines.sec-04::before,
+            .forth-lines.done04::before {
+                animation: appear-text 2.6s steps(21) 0s forwards;
+            }
+            .forth-lines.sec-04::after {
+                animation: appear-text_last 2.6s steps(21) 0s forwards,
+                blink 0.3s linear 0s infinite;
+            }
+            .forth-lines.done04::after {
+                animation: appear-text_last 2.6s steps(21) 0s forwards,
+                blink 0.8s linear 0s infinite;
+            }
+            .forth-lines.fade::after {
+                opacity: 0;
+            }
+        }
+        div::before {
+            content: "Click Enter!";
+            position: absolute;
+            top: 0;
+            left: -50%;
+            color: transparent;
+        }
+        div.help::before {
+            animation: help 1s linear 0s infinite normal;
+        }
+        div.diffusion {
+            animation: diffusion 1s ease 0s forwards normal;
+        }
+    }
+}
+
+.third-sections {
+    @include canvas;
+    overflow: hidden;
+    position: relative;
+    display: none;
+
+    .movie {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        z-index: 0;
+    }
+    .error-type {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        color: white;
+        font-size: 1rem;
+    }
+    .lyrics {
+        @include canvas;
+        @include pos-center;
+        position: relative;
+        color: white;
+        background-color: black;
+        transition: background-color 1s;
+        .start-mes {
+            font-size: 2rem;
+            font-family: 'Yellowtail', cursive;
+            animation: start-key 2s linear 0s infinite normal;
+        }
+        .front-lyrics {
+            position: absolute;
+            bottom: 200px;
+            font-size: 2rem;
+            text-shadow: 0 5px 7px black;
+
+            span {
+                display: inline-block;
+                transform: translateX(-500px);
+                transition: color 1s;
+                animation: lyrics-appear 0.5s ease 0s forwards normal;
+            }
+            span.lineType-done-f {
+                animation: lyrics-appear 0.5s ease 0s forwards normal,
+                span-letter-color-change 1s ease 0s forwards normal;
+            }
+        }
+        .front-lyrics.er-type-i::before {
+            content: "miss";
+            position: absolute;
+            top: -10;
+            left: -100px;
+            color: red;
+            font-family: 'Yellowtail', cursive;
+        }
+        .back-lyrics {
+            position: absolute;
+            bottom: 120px;
+            font-size: 2rem;
+            text-shadow: 0 5px 7px black;
+
+            span {
+                display: inline-block;
+                transform: translateX(500px);
+                transition: color 1s;
+                animation: lyrics-appear 0.5s ease 0s forwards normal;
+            }
+            span.lineType-done-b {
+                animation: lyrics-appear 0.5s ease 0s forwards normal,
+                span-letter-color-change 1s ease 0s forwards normal;
+            }
+        }
+        .check-area {
+            display: none;
+        }
+    }
+}
+
+.fourth-sections {
+    @include canvas;
+    overflow: hidden;
+    position: relative;
+    display: none;
+
+    .movie {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        z-index: 0;
+    }
+    .ending {
+        @include canvas;
+        position: absolute;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        .circle01 {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            animation: circle-roll 5s linear 0s infinite normal,
+            fancy-bg-radius 3s linear 0s infinite normal;
+
+            img {
+                position: absolute;
+                width: 50px;
+                height: 50px;
+                animation: img-roll 5s linear 0s infinite normal;
+            }
+        }
+        .main-text {
+            text-align: center;
+            font-weight: 700;
+            padding-top: 30px;
+            animation: fancy-bg-radius 3s linear 0s infinite normal;
+
+            h1 {
+                margin-bottom: 30px;
+
+                span {
+                    color: transparent;
+                }
+            }
+        }
+        .circle02 {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            animation: circle-roll 5s linear 0s infinite normal,
+            fancy-bg-radius 3s linear 0s infinite normal;
+
+            img {
+                position: absolute;
+                width: 50px;
+                height: 50px;
+                animation: img-roll 5s linear 0s infinite normal;
+            }
+        }
+    }
+}
+
+
+/* ＠keyframesコーナー */
+@keyframes title-Color-changing {
+    0% {
+        color: black;
+    }
+    50% {
+        color: white;
+    }
+    100% {
+        color: black;
+    }
+}
+@keyframes  title-confetti {
+    0% {
+        top: 0;
+        opacity: 0;
+        transform: rotate(0);
+        color: black;
+    }
+    20% {
+        opacity: 1;
+        transform: rotate(360deg);
+        color: white;
+    }
+    80% {
+        opacity: 1;
+        transform: rotate(0);
+        color: blue;
+    }
+    100% {
+        top: 100vh;
+        opacity: 0;
+        transform: rotate(360deg);
+        color: black;
+    }
+}
+@keyframes first-loading {
+    0% {
+        opacity: 0;
+    }
+    30% {
+        opacity: 1;
+    }
+    60% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}
+@keyframes appear-text {
+    100% {
+        left: 100%;
+    }
+}
+@keyframes blink {
+    0% {
+        background-color: black;
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+@keyframes appear-text_last {
+    100% {
+        left: 99%;
+    }
+}
+@keyframes help {
+    0% {
+        color: transparent;
+    }
+    50% {
+        color: red;
+        transform: scale(1.2);
+    }
+    100% {
+        color: transparent;
+        transform: scale(1);
+    }
+}
+@keyframes diffusion {
+    100% {
+        letter-spacing: 100px;
+        margin-bottom: 100px;
+        color: transparent;
+    }
+}
+@keyframes start-key {
+    0% {
+        color: transparent;
+    }
+    100% {
+        color: white;
+        transform: scale(1.1);
+    }
+}
+@keyframes lyrics-appear {
+    100% {
+        transform: translateX(0);
+    }
+}
+@keyframes span-letter-color-change {
+    50% {
+        color: yellow;
+    }
+    100% {
+        color: transparent;
+    }
+}
+@keyframes circle-roll {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+@keyframes img-roll {
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+@keyframes end-text-appear {
+    0% {
+        color: transparent;
+    }
+    100% {
+        color: black;
+    }
+}
+@keyframes fancy-bg-radius {
+    0% {
+        border-radius: 50%;
+        background-color: transparent;
+    }
+    25% {
+        border-radius: 33% 67% 18% 82% / 66% 50% 50% 34% ;
+    }
+    50% {
+        border-radius: 53% 47% 48% 52% / 82% 14% 86% 18% ;
+        background-color: rgb(118, 118, 118);
+    }
+    75% {
+        border-radius: 11% 89% 79% 21% / 82% 14% 86% 18% ;
+    }
+    100% {
+        border-radius: 50%;
+        background-color: transparent;
+    }
+}

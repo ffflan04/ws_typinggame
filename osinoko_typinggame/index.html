@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アイドル</title>
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="section-curtain">
+        <div class="section-loading"></div>
+    </div>
+
+    <section class="first-section">
+        <div class="title">
+            <h1 class="title-text"><div class="uni">Do </div><div class="uni">you </div><div class="uni">want </div><div class="uni">to </div><div class="uni">be </div><div class="uni">an </div><div class="uni">idol?</div></h1>
+            <div class="title-btn">Press Start</div>
+        </div>
+    </section>
+
+    <section class="second-sections">
+        <div class="explanation">
+            <div class="alert01"><h1 class="css-common01 first-line">welcome to my website</h1></div>
+            <div class="alert02"><h1 class="css-common01 second-lines">this was made only javascript</h1></div>
+            <div class="alert03"><h1 class="css-common01 third-lines">later you can see the results</h1></div>
+            <div class="alert04"><h1 class="css-common01 forth-lines">you just need to type</h1></div>
+        </div>
+    </section>
+
+    <section class="third-sections">
+
+        <video class="movie" src="./audio/ancol.mp4"></video>
+        <div class="error-type">
+            <span class="er-mes">error-type</span>
+            <span class="er-type-num">0</span>
+        </div>
+        <div class="lyrics">
+            <h1 class="start-mes"></h1>
+            <h1 class="front-lyrics"></h1>
+            <h1 class="back-lyrics"></h1>
+            <div class="check-area"></div>
+        </div>
+
+    </section>
+
+    <section class="fourth-sections">
+
+        <video class="movie" src="./audio/scoring.mp4" loop muted autoplay></video>
+        <div class="ending">
+            <div class="circle01">
+                <img src="./img/twitter.png" alt="">
+            </div>
+            <div class="main-text">
+                <h1></h1>
+                <h1></h1>
+                <h1></h1>
+                <h1></h1>
+                <h1></h1>
+            </div>
+            <div class="circle02">
+                <img src="./img/instagram.png" alt="">
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+
+        const $section_loading = document.querySelector('.section-loading')
+        const $section_curtain = document.querySelector('.section-curtain')
+
+        // 第四セクションの処理の中身
+        const fourth_section_loading = function(){
+
+            const $fourth_sections = document.querySelector('.fourth-sections')
+            const $circle01 = document.querySelector('.fourth-sections .circle01')
+            const $circle02 = document.querySelector('.fourth-sections .circle02')
+            const end_text_array = [
+                'thank you for playing',
+                'I was planning',
+                'making a more decent ending',
+                'but it ended up being a pain',
+                '6日かかって完成したよ'
+            ]
+            const $h1s = document.querySelectorAll('.fourth-sections .main-text h1')
+
+            // display none を解除します。
+            $fourth_sections.style.display = "block"
+
+            // １文字づつspanタグで覆って、h1タグに挿入。
+            $h1s.forEach(($h1,num)=>{
+                let letter = end_text_array[num].split('')
+                letter.forEach((uni,n)=>{
+                    const $span = document.createElement('span')
+                    $span.textContent = uni
+                    setTimeout(()=>{
+                        $span.style.animation = "end-text-appear 1s ease 0s forwards normal"
+                        $h1s[num].appendChild($span)
+                    },(n * 100))
+                })
+            })
+        }
+        
+
+        // 第三セクションの処理の中身
+        const third_section_loading = function(){
+            const $third_sections = document.querySelector('.third-sections')
+            const $movie = document.querySelector('.movie')
+            const $front_lyrics = document.querySelector('.front-lyrics')
+            const $back_lyrics = document.querySelector('.back-lyrics')
+            const $start_mes = document.querySelector('.start-mes')
+            const $lyrics = document.querySelector('.third-sections .lyrics')
+            const $check_area = document.querySelector('.third-sections .check-area')
+            const $er_type_num = document.querySelector('.third-sections .error-type .er-type-num')
+            const $click = new Audio('./audio/click.mp3')
+            const $wrong = new Audio('./audio/wrong.mp3')
+            let mv_paused = false
+            let press = false
+            let switch_lines = false
+            let mv_time = 0
+            let current_type = 0
+            let set_index = 0
+            let uni_index = 0
+            let lyrics_lines = 0
+            let letter_f
+            let letter_b
+            let error_type_num = 0
+            const lyrics_all = [
+                '明日世界は終わるんだって',
+                '君にはもう会えないんだって',
+                'またいつかって手を振ったって',
+                '叶わないんだよ',
+                '仕方ないね',
+                '明日世界は終わるんだって',
+                'それならもう',
+                'その時まで何度でもずっと',
+                '好きな音を鳴らそう',
+                '薄暗闇に包まれた',
+                '見覚えのない場所目を覚ます',
+                'ここは夜のない世界',
+                '今日で終わる世界',
+                'そんな日にあなたに出会った',
+                '好きにしていいと',
+                'それだけ残して',
+                '何処かへゆく',
+                'あなたの音が遠ざかってく',
+                'そしてまたひとり',
+                '淀んだ空気の中で',
+                'ありふれたあの日々をただ思い返す',
+                '終わりが来ることを待つ世界で',
+                '辛い過去も嫌な記憶も',
+                '忘れられないメロディーも',
+                '今日でさよなら',
+                'ひとり車を走らせる',
+                '営みの消えた街の中を',
+                '明日にはもう終わる今日に',
+                '何を願う',
+                '何を祈る',
+                '何処かから不意に',
+                '微かに聞こえてきたのは',
+                'ピアノの音',
+                '遠い日の音',
+                '誘われるままに',
+                '呼吸を合わせるように',
+                '重ねた音',
+                '心地良くて',
+                '懐かしくて',
+                '幾つも溢れてくる',
+                'いつしか蓋をして閉じ込めていた記憶',
+                '奏でる音が連れてきた思い出',
+                '気が付けば止まったピアノ',
+                'いつの間にか流れた涙',
+                '続きを鳴らそう',
+                'ありふれたあの日々をただ思い返す',
+                '終わりが来ることを待つ世界で',
+                '辛い過去も嫌な記憶も',
+                '忘れられないメロディーも',
+                'さよならなんだ',
+                '今ここで好きなようにただ音を鳴らす',
+                '最後の日に二人きりの街で',
+                'ありふれたあの日々をただ想い奏でる音が',
+                '重なり響く',
+                '明日世界は終わるんだって',
+                '明日世界は終わるんだって',
+                'もしも世界が終わらなくって',
+                '明日がやってきたなら',
+                'ねえその時は二人一緒に',
+                'なんて'
+            ]
+            const lyrics_convert = [
+                'asi ta se kai ha o wa ru n da t te',
+                'kimi ni ha mo u a e na i n da t te',
+                'ma ta i tu ka t te te wo hu t ta t te',
+                'kana wa na i n da yo',
+                'si kata na i ne',
+                'asi ta se kai ha o wa ru n da t te',
+                'so re na ra mo u',
+                'so no toki ma de nan do de mo zu t to',
+                'su ki na oto wo na ra so u',
+                'usu kura yami ni tutu ma re ta',
+                'mi obo e no na i ba sho me wo sa ma su',
+                'ko ko ha yoru no na i se kai',
+                'kyo u de o wa ru se kai',
+                'so n na hi ni a na ta ni de a t ta',
+                'su ki ni si te i i to',
+                'so re da ke noko si te',
+                'do ko ka he yu ku',
+                'a na ta no oto ga too za ka t te ku',
+                'so si te ma ta hi to ri',
+                'yodo n da kuu ki no naka de',
+                'a ri hu re ta a no hi bi wo ta da omo i kae su',
+                'o wa ri ga ku ru ko to wo ma tu se kai de',
+                'tura i ka ko mo iya na ki oku mo',
+                'wasu re ra re na i me ro dh i - mo',
+                'kyo u de sa yo na ra',
+                'hi to ri kuruma wo hasi ra se ru',
+                'itona mi no ki e ta mati no naka wo',
+                'asi ta ni ha mo u o wa ru kyo u ni',
+                'nani wo nega u',
+                'nani wo ino ru',
+                'do ko ka ka ra hu i ni',
+                'kasu ka ni ki ko e te ki ta no ha',
+                'pi a no no oto',
+                'too i hi no oto',
+                'saso wa re ru ma ma ni',
+                'ko kyuu wo a wa se ru yo u ni',
+                'kasa ne ta oto',
+                'koko ti yo ku te',
+                'natu ka si ku te',
+                'iku tu mo ahu re te ku ru',
+                'i tu si ka huta wo si te to ji ko me te i ta ki oku',
+                'kana de ru oto ga tu re te ki ta omo i de',
+                'ki ga tu ke ba to ma t ta pi a no',
+                'i tu no ma ni ka naga re ta namida',
+                'tudu ki wo na ra so u',
+                'a ri hu re ta a no hi bi wo ta da omo i kae su',
+                'o wa ri ga ku ru ko to wo ma tu se kai de',
+                'tura i ka ko mo iya na ki oku mo',
+                'wasu re ra re na i me ro dh i - mo',
+                'sa yo na ra na n da',
+                'ima ko ko de su ki na yo u ni ta da oto wo na ra su',
+                'sai go no hi ni huta ri ki ri no mati de',
+                'a ri hu re ta a no hi bi wo ta da omo i kana de ru oto ga',
+                'kasa na ri hibi ku',
+                'asi ta se kai ha o wa ru n da t te',
+                'asi ta se kai ha o wa ru n da t te',
+                'mo si mo se kai ga o wa ra na ku t te',
+                'asi ta ga ya t te ki ta na ra',
+                'ne e so no toki ha huta ri i ssho ni',
+                'na n te'
+            ]
+            const insert_lyrics = function(f_or_b, $f_or_b, lyrics_num){
+                f_or_b = lyrics_all[lyrics_num].split('')
+                f_or_b.forEach((letter_into)=>{
+                    const $span = document.createElement('span')
+                    $span.innerText = letter_into
+                    $f_or_b.appendChild($span)
+                })
+            }
+            const reset_lyrics = function(){
+                const $span = document.querySelectorAll('.lyrics span')
+                $span.forEach((span)=>{
+                    span.remove()
+                })
+            }
+            const reset_current_type = function(LLN){
+                lyrics_lines = LLN
+                current_type = 0
+                set_index = 0
+                uni_index = 0
+                switch_lines = false
+                $check_area.textContent = ""
+            }
+            const click_sound = function(sound){
+                sound.volume = 0.3
+                sound.play()
+                sound.currentTime = 0
+            }
+
+            // 第三セクションの display none を解除します。
+            $third_sections.style.display = "block"
+
+            // タイピングゲームの根幹になる、キー入力を受け取ります。
+            const play = function(e){
+
+                // １回しか通らないゲームを始める準備をする処理。
+                if (e.key && press==false){
+
+                    press = true
+                    $start_mes.style.display = "none"
+
+                    // 最初の歌詞を挿入しています。
+                    insert_lyrics(letter_f,$front_lyrics,0)
+                    insert_lyrics(letter_b,$back_lyrics,1)
+                    
+                    // ２秒後にミュージックスタート。
+                    setTimeout(()=>{
+                        $movie.play()
+                        $lyrics.style.backgroundColor = "transparent"
+                        const mv_base_timer = setInterval(()=>{
+                            mv_time++
+
+                            // 経過時間に応じて歌詞を挿入する。
+                            switch (mv_time){
+                                case 6:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,2)
+                                    insert_lyrics(letter_b,$back_lyrics,3)
+                                    reset_current_type(2)
+                                    break
+                                case 11:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,4)
+                                    insert_lyrics(letter_b,$back_lyrics,5)
+                                    reset_current_type(4)
+                                    break
+                                case 15:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,6)
+                                    insert_lyrics(letter_b,$back_lyrics,7)
+                                    reset_current_type(6)
+                                    break
+                                case 19:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,8)
+                                    insert_lyrics(letter_b,$back_lyrics,9)
+                                    reset_current_type(8)
+                                    break
+                                case 33:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,10)
+                                    insert_lyrics(letter_b,$back_lyrics,11)
+                                    reset_current_type(10)
+                                    break
+                                case 41:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,12)
+                                    insert_lyrics(letter_b,$back_lyrics,13)
+                                    reset_current_type(12)
+                                    break
+                                case 49:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,14)
+                                    insert_lyrics(letter_b,$back_lyrics,15)
+                                    reset_current_type(14)
+                                    break
+                                case 54:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,16)
+                                    insert_lyrics(letter_b,$back_lyrics,17)
+                                    reset_current_type(16)
+                                    break
+                                case 63:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,18)
+                                    insert_lyrics(letter_b,$back_lyrics,19)
+                                    reset_current_type(18)
+                                    break
+                                case 73:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,20)
+                                    insert_lyrics(letter_b,$back_lyrics,21)
+                                    reset_current_type(20)
+                                    break
+                                case 84:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,22)
+                                    insert_lyrics(letter_b,$back_lyrics,23)
+                                    reset_current_type(22)
+                                    break
+                                case 92:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,24)
+                                    insert_lyrics(letter_b,$back_lyrics,25)
+                                    reset_current_type(24)
+                                    break
+                                case 103:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,26)
+                                    insert_lyrics(letter_b,$back_lyrics,27)
+                                    reset_current_type(26)
+                                    break
+                                case 113:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,28)
+                                    insert_lyrics(letter_b,$back_lyrics,29)
+                                    reset_current_type(28)
+                                    break
+                                case 138:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,30)
+                                    insert_lyrics(letter_b,$back_lyrics,31)
+                                    reset_current_type(30)
+                                    break
+                                case 145:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,32)
+                                    insert_lyrics(letter_b,$back_lyrics,33)
+                                    reset_current_type(32)
+                                    break
+                                case 149:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,34)
+                                    insert_lyrics(letter_b,$back_lyrics,35)
+                                    reset_current_type(34)
+                                    break
+                                case 156:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,36)
+                                    insert_lyrics(letter_b,$back_lyrics,37)
+                                    reset_current_type(36)
+                                    break
+                                case 163:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,38)
+                                    insert_lyrics(letter_b,$back_lyrics,39)
+                                    reset_current_type(38)
+                                    break
+                                case 178:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,40)
+                                    insert_lyrics(letter_b,$back_lyrics,41)
+                                    reset_current_type(40)
+                                    break
+                                case 190:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,42)
+                                    insert_lyrics(letter_b,$back_lyrics,43)
+                                    reset_current_type(42)
+                                    break
+                                case 197:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,44)
+                                    insert_lyrics(letter_b,$back_lyrics,45)
+                                    reset_current_type(44)
+                                    break
+                                case 208:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,46)
+                                    insert_lyrics(letter_b,$back_lyrics,47)
+                                    reset_current_type(46)
+                                    break
+                                case 216:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,48)
+                                    insert_lyrics(letter_b,$back_lyrics,49)
+                                    reset_current_type(48)
+                                    break
+                                case 225:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,50)
+                                    insert_lyrics(letter_b,$back_lyrics,51)
+                                    reset_current_type(50)
+                                    break
+                                case 237:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,52)
+                                    insert_lyrics(letter_b,$back_lyrics,53)
+                                    reset_current_type(52)
+                                    break
+                                case 249:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,54)
+                                    insert_lyrics(letter_b,$back_lyrics,55)
+                                    reset_current_type(54)
+                                    break
+                                case 261:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,56)
+                                    insert_lyrics(letter_b,$back_lyrics,57)
+                                    reset_current_type(56)
+                                    break
+                                case 265:
+                                    reset_lyrics()
+                                    insert_lyrics(letter_f,$front_lyrics,58)
+                                    insert_lyrics(letter_b,$back_lyrics,59)
+                                    reset_current_type(58)
+                                    break
+                                case 277:
+                                    reset_lyrics()
+
+                                    // 不要なイベントを削除します。
+                                    document.removeEventListener('keypress', play)
+
+                                    // ディスプレイを黒のカーテンで閉める処理。
+                                    $section_curtain.style.backgroundColor = "black"
+                                    $section_curtain.style.zIndex = "2"
+
+                                    setTimeout(()=>{
+                                        // 第３セクションの中身を全て削除
+                                        $third_sections.remove()
+
+                                        // 第４セクションに遷移する処理
+                                        fourth_section_loading()
+
+                                        // 黒のカーテンを開ける処理。
+                                        $section_curtain.style.backgroundColor = "transparent"
+                                        $section_curtain.style.zIndex = "1"
+                                    },2000)
+                                    break
+                            }
+
+                        },1000)
+                    },2000)
+                }
+                // ゲームスタートを押した後の処理。
+                else if (press){
+                    const $span_f = document.querySelectorAll('.front-lyrics span')
+                    const $span_b = document.querySelectorAll('.back-lyrics span')
+
+                    // 正解するごとに、配列の取り出すインデックスを上げていって、
+                    // 配列のインデックスで、値が取れなくなったら、カウンターをプラスしよう。
+
+                    // ローマ字タイプが正しければ、checkboxに挿入する処理。
+                    let ly_roma = lyrics_convert[lyrics_lines].split(' ') // [asi, ta, se, kai, ha ] >>ここのlyrics_linesはあまり変わらない。
+                    let uni = ly_roma[set_index].split('') // [a,s,i]
+                    if (e.key==uni[uni_index]){ // e.key == m
+                        click_sound($click)
+                        let letter = document.createTextNode(e.key)
+                        $check_area.append(letter) // <div> m </div>
+                        if (uni[uni_index + 1] == undefined){ // u の後に、文字がなかったら
+                            uni_index = 0
+                        }else{
+                            uni_index++ // m で正解したら、u を評価するために＋＋
+                        }
+                    }else{ // タイプした文字が間違ってた時の処理
+                        $front_lyrics.classList.add('er-type-i')
+                        setTimeout(()=>{
+                            $front_lyrics.classList.remove('er-type-i')
+                        },300)
+                        click_sound($wrong)
+                        error_type_num++
+                        $er_type_num.textContent = `${error_type_num}`
+                    }
+                    // チェックボックスのローマ字が、日本語と一致してたら。
+                    if ($check_area.textContent==ly_roma[set_index]){ // <div> m </div> == mu
+
+                        // 次のチェックボックスの判定に備えて初期化
+                        $check_area.textContent = ""
+
+                        // $front_lyrics時の処理
+                        if (switch_lines==false){ 
+                            $span_f[current_type].style.color = "red" // [ 明,日,世,界,は,終,わ,る,ん,だ,っ,て ]
+                            if ($span_f[current_type + 1]==undefined){
+                                current_type=0
+                                switch_lines = true // $back_lyricsに遷移
+                                const $yellow_span = document.querySelectorAll('.third-sections .front-lyrics span')
+                                $yellow_span.forEach((span,num)=>{
+                                    span.classList.add('lineType-done-f')
+                                })
+                            }else{
+                                current_type++ // 無 -> 敵
+                            }
+                        // $back_lyrics時の処理
+                        }else{ 
+                            $span_b[current_type].style.color = "red"
+                            // back_lyrics全てタイプしたかの判定
+                            if ($span_b[current_type + 1]==undefined){
+                                current_type=0
+                                switch_lines = false // $front_lyricsに遷移
+                                const $yellow_span = document.querySelectorAll('.third-sections .back-lyrics span')
+                                $yellow_span.forEach((span,num)=>{
+                                    console.log('backの関数発火')
+                                    span.classList.add('lineType-done-b')
+                                })
+                            }else{
+                                current_type++ // 無 -> 敵
+                            }
+                        }
+
+                        // ラインの歌詞を全部タイピングしたら次の歌詞を取得してくる。
+                        if (ly_roma[set_index + 1]==undefined){ // ga, o, de の後に何もなかったら。
+                            set_index=0
+                            lyrics_lines++ // 次の行の歌詞を、とってくる。
+                        }else{
+                            set_index++ // mu -> teki
+                        }
+                    }
+                    if (e.key == "Enter"){
+                        // $movie.pause()
+                        // console.log($movie.currentTime)
+                    }
+                    else if (e.key == "q"){
+                        // $movie.play()
+                        // mv_paused = false
+                    }
+                }
+            }
+            
+            // プレイまでの猶予を挟みます。
+            setTimeout(()=>{
+                $start_mes.innerText = "hello gentleman"
+                setTimeout(()=>{
+                    $start_mes.innerText = "when you're ready"
+                    setTimeout(()=>{
+                        $start_mes.innerText = "To press key and go"
+
+                        // キー入力を受け付けます。
+                        document.addEventListener('keypress', play)
+                    },2000)
+                },1000)
+            },1000)
+            
+
+        }
+
+
+        // 第二セクションの処理の中身
+        const second_section_loading = function(){
+            let text_event_num = 0
+            let action_timer = 0
+            const $div = document.querySelectorAll('.second-sections .explanation div')
+            const $alert01 = document.querySelector('.alert01')
+            const $alert02 = document.querySelector('.alert02')
+            const $alert03 = document.querySelector('.alert03')
+            const $alert04 = document.querySelector('.alert04')
+            const $first_line = document.querySelector('.first-line')
+            const $second_lines = document.querySelector('.second-lines')
+            const $third_lines = document.querySelector('.third-lines')
+            const $forth_lines = document.querySelector('.forth-lines')
+
+            // 一定時間経過したら警告を表示する処理
+            const timerId = setInterval(()=>{
+                console.log(text_event_num)
+
+                // テキストイベント毎に、helpクラスをリセットする。
+                if (action_timer==0){ 
+                    $div.forEach((div)=>{
+                        div.classList.remove('help')
+                    })
+                }
+                // 第４テキストイベント終了時に、このhelpタイマーを止める。
+                if (text_event_num==7){
+                    clearInterval(timerId)
+                }
+                // ４秒経つごとに、直面してるテキストイベントに、helpクラスを付与する。
+                action_timer++
+                if (action_timer==5){
+                    switch (text_event_num){
+                        case 0:
+                            $alert01.classList.add('help')
+                            break
+                        case 2:
+                            $alert02.classList.add('help')
+                            break
+                        case 4:
+                            $alert03.classList.add('help')
+                            break
+                        case 6:
+                            $alert04.classList.add('help')
+                            break
+                    }
+                }
+            },1000)
+
+            // 第二セクションの趣旨、ユーザーレスポンシブ、テキストアニメーションの処理
+            $first_line.classList.add('entry')
+
+            const text_event_func = function(e){
+                // 第１テキストイベント
+                if (e.key=="Enter" && text_event_num==0){
+                    $first_line.classList.remove('entry')
+                    $first_line.classList.add('sec-01')
+                    $first_line.classList.add('done01')
+                    $second_lines.classList.add('sec-01')
+                    text_event_num++
+                    action_timer = 0
+                    setTimeout(()=>{
+                        text_event_num++
+                    },3500)
+                }
+                // 第２テキストイベント
+                else if (e.key=="Enter" && text_event_num==2){
+                    console.log('第二テキストイベント発火')
+                    $first_line.classList.remove('sec-01')
+                    $second_lines.classList.remove('sec-01')
+                    $second_lines.classList.add('sec-02')
+                    $second_lines.classList.add('done02')
+                    $third_lines.classList.add('sec-02')
+                    text_event_num++
+                    action_timer = 0
+                    setTimeout(()=>{
+                        text_event_num++
+                    },4400)
+                }
+                // 第３テキストイベント
+                else if (e.key=="Enter" && text_event_num==4){
+                    console.log('第３テキストイベント発火')
+                    $second_lines.classList.remove('sec-02')
+                    $third_lines.classList.remove('sec-02')
+                    $third_lines.classList.add('sec-03')
+                    $third_lines.classList.add('done03')
+                    $forth_lines.classList.add('sec-03')
+                    text_event_num++
+                    action_timer = 0
+                    setTimeout(()=>{
+                        text_event_num++
+                    },4400)
+                }
+                // 第４テキストイベント
+                else if (e.key=="Enter" && text_event_num==6){
+                    console.log('第４テキストイベント発火')
+                    $third_lines.classList.remove('sec-03')
+                    $third_lines.classList.remove('sec-03')
+                    $forth_lines.classList.add('sec-04')
+                    text_event_num++
+                    action_timer = 0
+                    setTimeout(()=>{
+                        text_event_num++
+                        $forth_lines.classList.remove('sec-04')      
+                        $forth_lines.classList.add('done04')
+                        setTimeout(()=>{
+                            // 入力し終えた擬似要素カーソルを消すアニメーション
+                            $forth_lines.classList.add('fade')
+
+                            // 用済みのイベントリスナーを削除。
+                            document.removeEventListener('keypress', text_event_func)
+
+                            // 第二セクションのテキストが拡散するアニメーション。
+                            $div.forEach((div)=>{
+                                div.classList.add('diffusion')
+                            })
+
+                            // ディスプレイを黒のカーテンで閉める処理。
+                            $section_curtain.style.backgroundColor = "black"
+                            $section_curtain.style.zIndex = "2"
+
+                            setTimeout(()=>{
+                                // 第二セクションの中身を全て削除
+                                const $second_sections = document.querySelector('.second-sections')
+                                $second_sections.remove()
+
+                                // 第三セクションに遷移する処理
+                                third_section_loading()
+
+                                // 黒のカーテンを開ける処理。
+                                $section_curtain.style.backgroundColor = "transparent"
+                                $section_curtain.style.zIndex = "1"
+                            },1000)
+                        },2000)
+                    },2600)
+                }
+            }
+            // ４秒後にキーボード操作を受け付けるという処理。
+            setTimeout(()=>{
+                document.addEventListener('keypress', text_event_func)
+            },3000)
+        }
+
+
+        // 第一セクションの処理の中身
+        const first_section_loading = function(){
+
+            const $first_section = document.querySelector('.first-section')
+            const $title_btn = document.querySelector('.first-section .title .title-btn')
+            const $cursor_circles = document.querySelectorAll('.cursor_cont01')
+
+            // display none を外します。
+            $first_section.style.display = "block"
+
+            // 最初のロード画面のロゴを作って挿入します。
+            const $i = document.createElement('i')
+            const $p = document.createElement('p')
+
+            $i.className = "fa-solid fa-hippo"
+            $i.classList.add('i_cont01')
+            $p.className = "p_cont01"
+            $p.innerText = "Hippo Hippo Games"
+
+            $section_loading.appendChild($i)
+            $section_loading.appendChild($p)
+
+            // カーソルに合わせて動く複数の星を定義する関数。
+            const mouse_tracking = function(e){
+                const mouseX = e.clientX
+                const mouseY = e.clientY
+                gsap.to('.cursor_cont01', {x: mouseX, y: mouseY, stagger: -0.1})
+            }
+
+            // 6秒後のロード画面の後。
+            setTimeout(()=>{
+                // 黒のカーテンを開ける処理
+                $section_curtain.style.backgroundColor = "transparent"
+                $section_curtain.style.zIndex = "1"
+                $section_curtain.style.transition = "all 1s"
+                
+                // カーソルに合わせて動く複数の星を作る処理
+                for (let i=1; i<6; i++){
+                    const $cursor = document.createElement('i')
+                    $cursor.className = "fa-solid fa-star-of-david"
+                    $cursor.classList.add('cursor_cont01')
+                    $section_loading.appendChild($cursor)
+                }
+                document.addEventListener('mousemove', mouse_tracking)
+
+            },6000)
+
+            // 背景に紙吹雪を降らせる処理。
+            const confettiAnim = function(){
+                const $confetti = document.createElement('i')
+                const min = 40
+                const max = 25
+                const num = Math.random() * (max - min) + min;
+                const num01 = Math.random() * 100
+
+                $confetti.className = "fa-solid fa-star"
+                $confetti.classList.add("confetti")
+                $confetti.style.width = `${num}px`
+                $confetti.style.height = `${num}px`
+                $confetti.style.left = `${num01}%`
+
+                $first_section.appendChild($confetti)
+
+                setTimeout(()=>{
+                    $confetti.remove()
+                },10000)
+            }
+            const timerId = setInterval(confettiAnim,300)
+
+            // Press Start を押したときの処理。
+            $title_btn.onclick = function(){
+                // タイトルテキストを上昇させるアニメーション
+                gsap.to('.uni', {
+                duration: 0.5,
+                opacity: 1,
+                y: -300,
+                stagger: 0.1,
+                ease: "back.in"
+                })
+
+                // 紙吹雪を止める処理
+                clearInterval(timerId)
+
+                // カーソルについてるイベント削除する処理。
+                document.removeEventListener('mousemove', mouse_tracking)
+
+                // カーソルに合わせて動く複数の星を削除する処理
+                const $cursor_circles = document.querySelectorAll('.cursor_cont01')
+                $cursor_circles.forEach(($star)=>{
+                    $star.remove()
+                    console.log($star)
+                })
+
+                setTimeout(()=>{
+                    // ディスプレイを黒のカーテンで閉める処理。
+                    $section_curtain.style.backgroundColor = "black"
+                    $section_curtain.style.zIndex = "2"
+
+                    // 第一セクションを全て削除する処理。
+                    setTimeout(()=>{
+                        $first_section.remove()
+
+                        // 第二セクションに遷移する処理
+                        const $second_sections = document.querySelector('.second-sections')
+                        $second_sections.style.display = "block"
+                        second_section_loading()
+
+                        // 黒のカーテンを開ける処理。
+                        $section_curtain.style.backgroundColor = "transparent"
+                        $section_curtain.style.zIndex = "1"
+                    },1000)
+                },1000)
+            }
+        }
+
+
+        /*---- 最初に読み込まれるJavascript ----*/
+        first_section_loading()
+        /* ----------------------------------*/
+
+    </script>
+</body>
+</html>
